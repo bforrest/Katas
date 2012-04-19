@@ -2,7 +2,7 @@
 {
     public enum FindThe
     {
-        Younger,
-        Older
+        Closest,
+        Farthest
     }
 }

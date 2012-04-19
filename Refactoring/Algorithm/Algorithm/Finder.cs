@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Algorithm
 {
@@ -13,37 +14,21 @@ namespace Algorithm
 
         public RankedPair Find(FindThe findBy)
         {
-            List<RankedPair> pairListing = CreateRankedPairs();
+            List<RankedPair> pairListing = CreateSortedRankedPairMatrix();
 
-            if(pairListing.Count < 1)
+            if (pairListing.Count < 1)
             {
                 return new RankedPair();
             }
 
-            RankedPair answer = pairListing[0];
-            foreach(var result in pairListing)
+            if (findBy == FindThe.Closest)
             {
-                switch(findBy)
-                {
-                    case FindThe.Younger:
-                        if(result.AgeGap < answer.AgeGap)
-                        {
-                            answer = result;
-                        }
-                        break;
-
-                    case FindThe.Older:
-                        if(result.AgeGap > answer.AgeGap)
-                        {
-                            answer = result;
-                        }
-                        break;
-                }
+                return pairListing.First();
             }
-
-            return answer;
+            return pairListing.Last();
         }
-        private List<RankedPair> CreateRankedPairs()
+
+        private List<RankedPair> CreateSortedRankedPairMatrix()
         {
             var tr = new List<RankedPair>();
 
@@ -54,7 +39,7 @@ namespace Algorithm
                     tr.Add(persons[i].BirthDate < persons[j].BirthDate ? new RankedPair(persons[i], persons[j]) : new RankedPair(persons[j], persons[i]));
                 }
             }
-            return tr;
+            return tr.OrderBy(x => x.AgeGap).ToList();
         }
     }
 }

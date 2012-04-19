@@ -16,5 +16,10 @@ namespace Algorithm
         public Person Younger { get; protected  set; }
         public Person Older { get; protected set; }
         public TimeSpan AgeGap { get; protected set; }
+
+        public override string ToString()
+        {
+            return String.Format("Younger: {0}, Older: {1}, AgeGap: {2}", Younger.Name, Older.Name, AgeGap);
+        }
     }
 }
