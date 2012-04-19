@@ -12,7 +12,7 @@ namespace Algorithm.Test
             var list = new List<Person>();
             var finder = new Finder(list);
 
-            var result = finder.Find(FindThe.Closest);
+            var result = finder.Find(By.Closest);
 
             Assert.Null(result.Younger);
             Assert.Null(result.Older);
@@ -24,7 +24,7 @@ namespace Algorithm.Test
             var list = new List<Person>() { sue };
             var finder = new Finder(list);
 
-            var result = finder.Find(FindThe.Closest);
+            var result = finder.Find(By.Closest);
 
             Assert.Null(result.Younger);
             Assert.Null(result.Older);
@@ -36,7 +36,7 @@ namespace Algorithm.Test
             var list = new List<Person>() { sue, greg };
             var finder = new Finder(list);
 
-            var result = finder.Find(FindThe.Closest);
+            var result = finder.Find(By.Closest);
 
             Assert.Same(sue, result.Younger);
             Assert.Same(greg, result.Older);
@@ -48,7 +48,7 @@ namespace Algorithm.Test
             var list = new List<Person>() { greg, mike };
             var finder = new Finder(list);
 
-            var result = finder.Find(FindThe.Farthest);
+            var result = finder.Find(By.Farthest);
 
             Assert.Same(greg, result.Younger);
             Assert.Same(mike, result.Older);
@@ -60,7 +60,7 @@ namespace Algorithm.Test
             var list = new List<Person>() { greg, mike, sarah, sue };
             var finder = new Finder(list);
 
-            var result = finder.Find(FindThe.Farthest);
+            var result = finder.Find(By.Farthest);
 
             Assert.Same(sue, result.Younger);
             Assert.Same(sarah, result.Older);
@@ -72,7 +72,7 @@ namespace Algorithm.Test
             var list = new List<Person>() { greg, mike, sarah, sue };
             var finder = new Finder(list);
 
-            var result = finder.Find(FindThe.Closest);
+            var result = finder.Find(By.Closest);
 
             Assert.Same(sue, result.Younger);
             Assert.Same(greg, result.Older);

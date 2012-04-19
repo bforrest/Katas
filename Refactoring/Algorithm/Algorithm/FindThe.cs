@@ -1,6 +1,6 @@
 ﻿namespace Algorithm
 {
-    public enum FindThe
+    public enum By
     {
         Closest,
         Farthest

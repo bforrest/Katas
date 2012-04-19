@@ -12,34 +12,16 @@ namespace Algorithm
             persons = people;
         }
 
-        public RankedPair Find(FindThe findBy)
+        public RankedPair Find(By findBy)
         {
-            List<RankedPair> pairListing = CreateSortedRankedPairMatrix();
-
-            if (pairListing.Count < 1)
-            {
+            if (persons.Count < 2)
                 return new RankedPair();
-            }
 
-            if (findBy == FindThe.Closest)
-            {
-                return pairListing.First();
-            }
-            return pairListing.Last();
-        }
-
-        private List<RankedPair> CreateSortedRankedPairMatrix()
-        {
-            var tr = new List<RankedPair>();
-
-            for (var i = 0; i < persons.Count - 1; i++)
-            {
-                for (var j = i + 1; j < persons.Count; j++)
-                {
-                    tr.Add(persons[i].BirthDate < persons[j].BirthDate ? new RankedPair(persons[i], persons[j]) : new RankedPair(persons[j], persons[i]));
-                }
-            }
-            return tr.OrderBy(x => x.AgeGap).ToList();
+            var pairListing = (from person in persons
+                               from person1 in persons.Skip(persons.IndexOf(person) + 1)
+                               select person.BirthDate < person1.BirthDate ? new RankedPair(person, person1) : new RankedPair(person1, person)).OrderBy(x => x.AgeGap);
+            
+            return findBy == By.Closest ? pairListing.First() : pairListing.Last();
         }
     }
 }
