@@ -4,56 +4,36 @@ namespace Algorithm
 {
     public class Finder
     {
-        private readonly List<Thing> _p;
+        private readonly List<Person> persons;
 
-        public Finder(List<Thing> p)
+        public Finder(List<Person> people)
         {
-            _p = p;
+            persons = people;
         }
 
-        public F Find(FT ft)
+        public RankedPair Find(FindThe findBy)
         {
-            var tr = new List<F>();
+            List<RankedPair> pairListing = CreateRankedPairs();
 
-            for(var i = 0; i < _p.Count - 1; i++)
+            if(pairListing.Count < 1)
             {
-                for(var j = i + 1; j < _p.Count; j++)
-                {
-                    var r = new F();
-                    if(_p[i].BirthDate < _p[j].BirthDate)
-                    {
-                        r.P1 = _p[i];
-                        r.P2 = _p[j];
-                    }
-                    else
-                    {
-                        r.P1 = _p[j];
-                        r.P2 = _p[i];
-                    }
-                    r.D = r.P2.BirthDate - r.P1.BirthDate;
-                    tr.Add(r);
-                }
+                return new RankedPair();
             }
 
-            if(tr.Count < 1)
+            RankedPair answer = pairListing[0];
+            foreach(var result in pairListing)
             {
-                return new F();
-            }
-
-            F answer = tr[0];
-            foreach(var result in tr)
-            {
-                switch(ft)
+                switch(findBy)
                 {
-                    case FT.One:
-                        if(result.D < answer.D)
+                    case FindThe.Younger:
+                        if(result.AgeGap < answer.AgeGap)
                         {
                             answer = result;
                         }
                         break;
 
-                    case FT.Two:
-                        if(result.D > answer.D)
+                    case FindThe.Older:
+                        if(result.AgeGap > answer.AgeGap)
                         {
                             answer = result;
                         }
@@ -62,6 +42,19 @@ namespace Algorithm
             }
 
             return answer;
+        }
+        private List<RankedPair> CreateRankedPairs()
+        {
+            var tr = new List<RankedPair>();
+
+            for (var i = 0; i < persons.Count - 1; i++)
+            {
+                for (var j = i + 1; j < persons.Count; j++)
+                {
+                    tr.Add(persons[i].BirthDate < persons[j].BirthDate ? new RankedPair(persons[i], persons[j]) : new RankedPair(persons[j], persons[i]));
+                }
+            }
+            return tr;
         }
     }
 }
